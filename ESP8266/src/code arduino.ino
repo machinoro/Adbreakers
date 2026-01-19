@@ -142,9 +142,14 @@ void setup() {
     server.send_P(200, "text/html", PAGE);
   });
 
-  server.on("/music", HTTP_GET, [](AsyncWebServerRequest *request) {
-    String cmd = request->getParam("cmd")->value();
-    String file = request->getParam("file")->value();
+  server.on("/music", HTTP_GET, []() {
+    if (!server.hasArg("cmd")) {
+      server.send(400, "text/plain", "Missing cmd");
+      return;
+    }
+
+    String cmd  = server.arg("cmd");
+    String file = server.hasArg("file") ? server.arg("file") : "";
 
     if (cmd == "select") {
       Serial.println("Đang chọn file " + file);
@@ -156,11 +161,17 @@ void setup() {
       Serial.println("Dừng file " + file);
     }
 
-    request->send(200, "text/plain", "OK");
+    server.send(200, "text/plain", "OK");
   });
 
-  server.on("/arrow", HTTP_GET, [](AsyncWebServerRequest *request) {
-    String dir = request->getParam("dir")->value();
+
+  server.on("/arrow", HTTP_GET, []() {
+    if (!server.hasArg("dir")) {
+      server.send(400, "text/plain", "Missing dir");
+      return;
+    }
+
+    String dir = server.arg("dir");
 
     if (dir == "TURN_LEFT") {
       Serial.println("Turn left");
@@ -181,7 +192,7 @@ void setup() {
       Serial.println("Move right");
     }
 
-    request->send(200, "text/plain", "OK");
+    server.send(200, "text/plain", "OK");
   });
 
 
