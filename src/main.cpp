@@ -3,7 +3,7 @@
 #include <WebServer.h>
 #include <SD.h>
 #include <SPI.h>
-#include "servo_helper.h"
+#include "servo.h"
 #include "audio_helper.h"
 #include "sd.h"
 #include "index.h" 
@@ -13,7 +13,6 @@ File uploadFile;
 
 const char* ssid = "Hehehe";
 const char* pass = "khongbiet";
-
 
 void setupWebServer() {
     server.on("/", HTTP_GET, []() {
@@ -57,12 +56,20 @@ void setupWebServer() {
         String dir = server.arg("dir");
         Serial.println("Move: " + dir);
 
-        if (dir == "TURN_LEFT") turnLeft();
+        if (dir == "TURN_LEFT") turnLeft(); 
         else if (dir == "TURN_RIGHT") turnRight();
-        else if (dir == "UP") moveForward();
-        else if (dir == "DOWN") moveBack();
-        else if (dir == "LEFT") moveLeft();
-        else if (dir == "RIGHT") moveRight();
+        else if (dir == "UP") { moveForward(); moveForward(); stableKnee(); }
+        else if (dir == "DOWN") { moveBack(); moveBack(); stableKnee(); }
+        else if (dir == "LEFT") { moveLeft(); moveLeft(); stableKnee(); }
+        else if (dir == "RIGHT") { moveRight(); moveRight(); stableKnee(); }
+        else if (dir == "HeD") {
+            current_height -= 0.5;
+            setHeight(current_height);
+        } else if (dir == "HeU") {
+            current_height += 0.5;
+            setHeight(current_height);
+        }
+        
 
         server.send(200, "text/plain", "OK");
     });

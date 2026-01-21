@@ -1,4 +1,3 @@
-
 const char PAGE[] PROGMEM = R"rawliteral(
 <!DOCTYPE html>
 <html lang="vi">
@@ -190,6 +189,12 @@ progress {
   gap: 12px;
 }
 
+/* Specific style for height buttons to fit them nicely if needed */
+#control .height-row button {
+    font-size: 20px; 
+    width: 100px; /* Make them a bit wider for text */
+}
+
 </style>
 
 </head>
@@ -235,6 +240,11 @@ progress {
       <button id="btn-left" onclick="sendDir('LEFT')">⬅️</button>
       <button id="btn-down" onclick="sendDir('DOWN')">⬇️</button>
       <button id="btn-right" onclick="sendDir('RIGHT')">➡️</button>
+    </div>
+    
+    <div class="row height-row">
+      <button id="btn-h-up" onclick="sendDir('HeU')">Height ➕</button>
+      <button id="btn-h-down" onclick="sendDir('HeD')">Height ➖</button>
     </div>
 
   </div>
@@ -416,5 +426,4 @@ loadFiles();
 
 </body>
 </html>
-
 )rawliteral";
