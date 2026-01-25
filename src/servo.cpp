@@ -17,10 +17,10 @@ struct legIndex {
 };
 
 legIndex legs[4] = {
-    {0, 3},    // leg 0
-    {4, 7},    // leg 1
-    {8, 11},   // leg 2
-    {12, 15}   // leg 3
+    {6, 7},    // leg 0
+    {8, 9},    // leg 1
+    {10, 15},   // leg 2
+    {0, 5}   // leg 3
 };
 
 int8_t orients[4] = {-1, -1, 1, 1};
@@ -59,7 +59,7 @@ void dynamicServoAssignment(legIndex targets[4]) {
             current_angles[i].hip  = hip;
             current_angles[i].knee = knee;
         }
-        delay(2);
+        delay(1);
     }
 }
 

@@ -11,8 +11,8 @@
 WebServer server(80);
 File uploadFile;
 
-const char* ssid = "Hehehe";
-const char* pass = "khongbiet";
+const char* ssid = "Vo";
+const char* pass = "hieu2007";
 
 void setupWebServer() {
     server.on("/", HTTP_GET, []() {
@@ -56,8 +56,8 @@ void setupWebServer() {
         String dir = server.arg("dir");
         Serial.println("Move: " + dir);
 
-        if (dir == "TURN_LEFT") turnLeft(); 
-        else if (dir == "TURN_RIGHT") turnRight();
+        if (dir == "TURN_LEFT") { turnLeft(); turnLeft(); }
+        else if (dir == "TURN_RIGHT") { turnRight(); turnRight(); }
         else if (dir == "UP") { moveForward(); moveForward(); stableKnee(); }
         else if (dir == "DOWN") { moveBack(); moveBack(); stableKnee(); }
         else if (dir == "LEFT") { moveLeft(); moveLeft(); stableKnee(); }
@@ -98,10 +98,6 @@ void setup() {
     initSD();
     setupAudio();
     
-    if (!SD.exists("/music")) {
-        SD.mkdir("/music");
-        Serial.println("Created /music");
-    }
 
     setupServos();
     connectWiFi();

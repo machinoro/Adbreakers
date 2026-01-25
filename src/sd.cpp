@@ -17,6 +17,12 @@ void initSD() {
         return;
     }
 
+    
+    if (!SD.exists("/music")) {
+        SD.mkdir("/music");
+        Serial.println("Created /music");
+    }
+
 }
 
 void handleList() {
